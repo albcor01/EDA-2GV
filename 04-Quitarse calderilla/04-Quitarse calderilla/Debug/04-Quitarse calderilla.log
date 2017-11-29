@@ -1,3 +1,5 @@
 ﻿  Main.cpp
-  04-Quitarse calderilla.vcxproj -> C:\Users\avr-9\Desktop\Desarrollo de Videojuegos\2º\Estructura de Datos y Computadores\Tarea\04-Quitarse calderilla\Debug\04-Quitarse calderilla.exe
-  04-Quitarse calderilla.vcxproj -> C:\Users\avr-9\Desktop\Desarrollo de Videojuegos\2º\Estructura de Datos y Computadores\Tarea\04-Quitarse calderilla\Debug\04-Quitarse calderilla.pdb (Partial PDB)
+c:\users\avr-9\desktop\desarrollo de videojuegos\2º\estructura de datos y computadores\tarea\eda-2gv\04-quitarse calderilla\04-quitarse calderilla\main.cpp(63): warning C4018: '<': signed/unsigned mismatch
+c:\users\avr-9\desktop\desarrollo de videojuegos\2º\estructura de datos y computadores\tarea\eda-2gv\04-quitarse calderilla\04-quitarse calderilla\main.cpp(108): warning C4018: '<': signed/unsigned mismatch
+  04-Quitarse calderilla.vcxproj -> C:\Users\avr-9\Desktop\Desarrollo de Videojuegos\2º\Estructura de Datos y Computadores\Tarea\EDA-2GV\04-Quitarse calderilla\Debug\04-Quitarse calderilla.exe
+  04-Quitarse calderilla.vcxproj -> C:\Users\avr-9\Desktop\Desarrollo de Videojuegos\2º\Estructura de Datos y Computadores\Tarea\EDA-2GV\04-Quitarse calderilla\Debug\04-Quitarse calderilla.pdb (Partial PDB)
