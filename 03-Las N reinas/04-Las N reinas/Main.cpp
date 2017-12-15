@@ -1,5 +1,6 @@
-//ALBERTO CÓRDOBA ORTIZ
-//ALEJANDRO VILLAR RUBIO
+//Alberto Córdoba Ortiz
+//Alejandro Villar Rubio
+//Grupo 10
 
 #include <vector>
 #include <iostream>

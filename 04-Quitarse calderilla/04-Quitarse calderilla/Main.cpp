@@ -19,30 +19,20 @@ void rellenaMon(vector<par>& mon, vector<par>& monAux, vector<par>& sol_mejor)
 	for (int i = 0; i < 8; i++)
 	{
 		cin >> mon[i].cantidad;
+		if (mon[i].cantidad > 100) mon[i].cantidad = 100;
 		monAux[i].cantidad = 0;
 		sol_mejor[i].cantidad = 0;
 	}
 }
 
-int actualiza(int cantidad, const vector<par>& sol, int k)
+int actualiza(int numMon, int c)
 {
-	if (sol[k].cantidad > 0)
-		cantidad++;
-	return cantidad;
+	return numMon + c;
 }
 
-bool es_solucion(int valor_total, const vector<par> sol, int k)
+bool es_solucion(int valor_total, int sumanueva)
 {
-	int valorActual = 0;
-	bool valorIdeal = false;
-	int i = 0;
-	while (i <= k && !valorIdeal) {
-		valorActual += sol[i].cantidad * sol[i].valor;
-		if (valorActual == valor_total) 
-			valorIdeal = true;
-		i++;
-	}
-	return valorIdeal;
+	return valor_total == sumanueva;
 }
 
 bool mejor(int nuevo_valor, int valor_mejor)
@@ -53,42 +43,45 @@ bool mejor(int nuevo_valor, int valor_mejor)
 		return false;
 }
 
-bool es_completable(int valor_total, const vector<par> sol, int k)
+bool es_completable(int valor_total, int sumanueva)
 {
-	int valorActual = 0;
+	return sumanueva < valor_total;
+}
 
-	for (int i = 0; i <= k; i++) {
-		valorActual += sol[i].cantidad * sol[i].valor;
+bool es_prometedora(const vector<par>& sol, int k, int totalPagar, int sumaNueva)
+{
+	if (k + 1 < sol.size())
+	{
+		return totalPagar >= (sumaNueva + sol[k + 1].valor);
 	}
-	if (k < sol.size() - 1 && valorActual < valor_total)
-		return true;
-	else
-		return false;
+	return false;
 }
 
-bool es_prometedora(vector<par>& sol, int k, int nueva_cantidad, int cantidad_mejor)
+void vuelta_atras_opt(vector<par>& sol, int k, int num_Mon, int& cantidad_mejor, int totalPagar, const vector<par>& monedero, bool& posible, int sumaTotal)
 {
-	return true;
-}
-
-void vuelta_atras_opt(vector<par>& sol, int k, int& num_Mon, vector<par>& sol_mejor, int& cantidad_mejor, int totalPagar, const vector<par> monedero)
-{
-	for (int c = 0; c <= monedero[k].cantidad; c++)
+	unsigned int c = 0;
+	bool stop = false;
+	while (k < sol.size() && c <= monedero[k].cantidad)
 	{
 		sol[k].cantidad = c;
-		int nueva_cantidad = actualiza(num_Mon, sol, k);
-		if (es_solucion(totalPagar, sol, k))
+
+		int sumaNueva = sumaTotal + (sol[k].valor * c);
+		int nueva_cantidad = actualiza(num_Mon, c);
+		if (es_solucion(totalPagar, sumaNueva))
 		{
+			posible = true;
 			if (mejor(nueva_cantidad, cantidad_mejor))
 			{
-				sol_mejor = sol;
 				cantidad_mejor = nueva_cantidad;
 			}
 		}
-		else if (es_completable(totalPagar, sol, k) && es_prometedora(sol, k, nueva_cantidad, cantidad_mejor))
+		else if (es_completable(totalPagar, sumaNueva) && es_prometedora(sol, k, totalPagar, sumaNueva))
 		{
-			vuelta_atras_opt(sol, k + 1, nueva_cantidad, sol_mejor, cantidad_mejor, totalPagar, monedero);
+			vuelta_atras_opt(sol, k + 1, nueva_cantidad, cantidad_mejor, totalPagar, monedero, posible, sumaNueva);
+			if (k == 0) 
+				cout << "k = 0" << endl;
 		}
+		c++;
 	}
 }
 
@@ -100,16 +93,26 @@ int main()
 	int n, dinero, cantidad = 0, num_Mon = 0;
 	cin >> n;
 
+
 	for (int i = 0; i < n; i++)
 	{
+		bool posible = false;
 		cin >> dinero;
-		rellenaMon(mon, monAux, sol_mejor);
-		vuelta_atras_opt(monAux, 0, num_Mon, sol_mejor, cantidad, dinero, mon);
-		for (int i = 0; i < sol_mejor.size(); i++)
-			cout << sol_mejor[i].cantidad << " ";
-		cout << endl << cantidad << endl;
-	}
 
+		rellenaMon(mon, monAux, sol_mejor);
+		vuelta_atras_opt(monAux, 0, num_Mon, cantidad, dinero, mon, posible, 0);
+
+		if (posible)
+		{
+			cout << cantidad << endl;
+		}
+		else
+		{
+			cout << "IMPOSIBLE" << endl;
+		}
+
+	}
 	system("pause");
+
 	return 0;
 }
