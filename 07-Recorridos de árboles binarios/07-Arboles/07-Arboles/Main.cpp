@@ -50,53 +50,52 @@ private:
 		}
 	}
 
+	//Coste O(n), donde n es el numero de elementos del arbol porque se recorren recursivamente todos los elementos del arbol
 	void preorder_rec(vector<T>& orden) const
 	{
-		if (!empty())
+		if (!empty())	
 		{
-			orden.push_back(root());
-			left().preorder_rec(orden);
-			right().preorder_rec(orden);
+			orden.push_back(root());	
+			left().preorder_rec(orden);	
+			right().preorder_rec(orden);	
 		}
 	}
 
+	//Coste O(n), donde n es el numero de elementos del arbol porque se recorren recursivamente todos los elementos del arbol
 	void inorder_rec(vector<T>& orden) const
 	{
 		if (!empty())
 		{
-			left().inorder_rec(orden);
-			orden.push_back(root());
+			left().inorder_rec(orden);	
+			orden.push_back(root());	
 			right().inorder_rec(orden);
 		}
 	}
 
+	//Coste O(n), donde n es el numero de elementos del arbol porque se recorren recursivamente todos los elementos del arbol
 	void postorder_rec(vector<T>& orden) const
 	{
 		if (!empty())
 		{
-			left().postorder_rec(orden);
-			right().postorder_rec(orden);
+			left().postorder_rec(orden);	
+			right().postorder_rec(orden);	
 			orden.push_back(root());
 		}
 	}
 
+	//Coste O(n), donde n es el numero de elementos del arbol porque se recorren recursivamente todos los elementos del arbol
 	void levels_rec(vector<T>& orden, queue<bintree<T>>& treeQueue)const
 	{
-		if (!treeQueue.empty())
+		if (!treeQueue.empty()) 
 		{
-			if (!treeQueue.front().empty())
+			if (!treeQueue.front().empty())	
 			{
-				orden.push_back(treeQueue.front().root());
-				treeQueue.push(treeQueue.front().left());
-				treeQueue.push(treeQueue.front().right());
-				treeQueue.pop();
-				levels_rec(orden, treeQueue);
+				orden.push_back(treeQueue.front().root());	
+				treeQueue.push(treeQueue.front().left());	
+				treeQueue.push(treeQueue.front().right());	
 			}
-			else
-			{
-				treeQueue.pop();
-				levels_rec(orden, treeQueue);
-			}
+			treeQueue.pop(); 
+			levels_rec(orden, treeQueue); 
 		}
 	}
 
@@ -156,38 +155,39 @@ public:
 		out << "===============" << endl;
 	}
 
-
+	//O(n) debido a la llamada al metodo recursivo 
 	vector<T> preorder() const
 	{
-		vector<T> orden;
-		preorder_rec(orden);
-		return orden;
+		vector<T> orden;	
+		preorder_rec(orden);	
+		return orden;	
 	}
 
+	//O(n) debido a la llamada al metodo recursivo 
 	vector<T> inorder() const
 	{
-		vector<T> orden;
-		inorder_rec(orden);
-		return orden;
+		vector<T> orden;	
+		inorder_rec(orden);	
+		return orden;	
 	}
 
+	//O(n) debido a la llamada al metodo recursivo 
 	vector<T> postorder() const
 	{
-		vector<T> orden;
-		postorder_rec(orden);
-		return orden;
+		vector<T> orden;	
+		postorder_rec(orden);	
+		return orden;	
 	}
 
+	//O(n) debido a la llamada al metodo recursivo 
 	vector<T> levels() const
 	{
 		queue<bintree<T>> treeQueue;
 		vector<T> orden;
-		if (!empty())
+		if (!empty())	
 		{
-			orden.push_back(root());
-			treeQueue.push(left());
-			treeQueue.push(right());
-			levels_rec(orden, treeQueue);
+			treeQueue.push(*this);	
+			levels_rec(orden, treeQueue);	
 		}
 		return orden;
 	}
